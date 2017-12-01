@@ -1,0 +1,245 @@
+---
+title: "Introduction à R"
+subtitle: "Cours 3. IMPORTER ET NETTOYER DES DOCUMENTS"
+author: "Yannick Rochat"
+date: "1er décembre 2017"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  slidy_presentation: default
+---
+
+La cheatsheet pour l'importation et l'exportation de données.
+
+https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf
+
+----
+
+### Connaître l'emplacement du dossier de travail
+
+`getwd` = ***get working directory***
+
+```{r}
+getwd()
+```
+
+---- 
+
+### Modifier l'emplacement du dossier de travail
+
+La touche de tabulation permet de naviguer plus efficacement dans les dossiers.
+
+```{r eval = FALSE}
+setwd()
+```
+
+----
+
+#### Sauver un texte
+
+On crée un texte quelconque pour l'occasion. Le symbole `\n` est un retour à la ligne.
+
+```{r}
+dummy_text <- c("hello world\nhello world\nhello world\nhello world")
+```
+
+----
+
+La fonction `cat` permet d'afficher du texte.
+
+```{r}
+cat(dummy_text)
+```
+
+----
+
+La fonction `print` le permet aussi, mais le résultat est différent.
+
+```{r}
+print(dummy_text)
+```
+
+
+----
+
+Sauvons le texte dans le dossier `data` situé à l'intérieur du dossier de travail.
+
+```{r}
+write(dummy_text, file = "../data/dummy_text.txt")
+```
+
+* Les premiers `..` signifient que nous remontons d'un niveau.
+* Puis nous entrons dans le dossier `data` et nous sauvons notre texte à cet endroit-là sous le nom `dummy_text.txt`.
+
+---- 
+
+#### Sauver un graphique
+
+Lorsqu'on enregistre ou qu'on charge des données depuis ou vers R, celui-ci ouvre une connexion (souvent vu comme un «tunnel»).
+
+L'exemple suivant sert à illustrer ceci.
+
+----
+
+```{r}
+pdf("../outputs/dummy_output.pdf")
+plot(1:10, rnorm(10))
+dev.off()
+```
+
+* La fonction `pdf` ouvre un tunnel.
+* Elle crée un fichier `dummy_output.pdf` sur l'ordinateur.
+* Tous les résultats graphiques produits à partir de ce moment-là passent dans le tunnel.
+* Ici l'exemple utilisé n'a pas d'importance. Il s'agit de représenter aléatoirement dix points côte à côte.
+* La fonction `dev.off` ferme le tunnel. Ce n'est qu'à partir de ce moment-là que l'on peut accéder au fichier `pdf`.
+
+---- 
+
+#### Exercice 3.1
+
+* Enregistrez cette phrase dans une variable.
+* Sauvez-là au format `.txt` 
+
+----
+
+#### Exercice 3.2
+
+* Enregistrez le graphique suivant au format png sur votre ordinateur.
+
+```{r}
+x <- y <- seq(-4*pi, 4*pi, len = 27)
+r <- sqrt(outer(x^2, y^2, "+"))
+image(z = z <- cos(r^2)*exp(-r/6), col  = gray((0:32)/32))
+```
+
+
+---- 
+
+### Le package `readr`
+
+À partir de là, nous allons utiliser le package `readr` pour lire et écrire des informations textuelles.
+
+Le code suivant vérifier si le package est installé sur votre machine et l'installe le cas échéant. Puis il le charge.
+
+```{r}
+if (!require(readr)) install.packages("readr")
+library(readr)
+```
+
+----
+
+* Les packages sont des ensembles de fonctions que l'on ajoute aux fonctions déjà disponibles.
+* Les fonctions d'un package ont en général été regroupées autour d'une thématique commune.
+* Dans notre cas: l'importation et l'exportation de données textuelles.
+
+----
+
+### csv (comma separated values)
+
+Ne pas oublier les guillemets `"..."` autour du nom du fichier.
+
+Pour découvrir pour quelle raison nous utilisons la fonction `read_csv2` et pas `read_csv`, consultez le fichier d'aide de ces fonctions. La réponse est dans le premier paragraphe.
+
+```{r}
+fifa <- read_csv2("../data/fifa.csv")
+```
+
+----
+
+Un aperçu.
+
+```{r}
+str(fifa)
+```
+
+----
+
+Pour consulter l'objet importé - dans ce cas un tableau de données - vous pouvez vous rendre dans la fenêtre en haut à droite de RStudio puis dans l'onglet "Environment". Vous trouverez le tableau sous "Data". En double-cliquant dessus, il s'ouvrira dans cette fenêtre et vous pourrez vérifier que le tableau a bien été importé (en particulier dans le cas de "parsing failures").
+
+----
+
+Il est également possible d'afficher le tableau assez élégament dans le notebook.
+
+```{r}
+fifa
+```
+
+----
+
+Pour sauver un fichier au format csv, il faut utiliser la fonction `write_csv`
+
+```{r}
+write_csv(fifa, "../outputs/fifa.csv")
+```
+
+---- 
+
+#### xls (Microsoft Excel/libreOffice/Google Spreadsheets)
+
+* On préfère en général sauver les fichiers au format csv car ils sont ainsi beaucoup plus légers et ne transportent pas l'encodage parfois lourd d'un fichier xls.
+* Néanmoins, ce n'est pas toujours possible d'y échapper. Les données de l'OFS par exemple sont souvent fournies au format xls.
+
+----
+
+`readxl` est un package qui permet d'importer (et d'exporter) des fichiers au format xls.
+
+```{r}
+if (!require(readxl)) install.packages("readxl")
+library(readxl)
+```
+
+---- 
+
+Prenons un fichier au hasard de l'OFS : "Comportement de la population en matière de transport, chiffres clés - agglomération de Lausanne (définition 2000)"
+
+https://www.bfs.admin.ch/bfs/fr/home/statistiques/catalogues-banques-donnees/tableaux.assetdetail.2082350.html
+
+Il est présent dans le dossier `data`.
+
+----
+
+La fonction `read_excel` est ce qu'il nous faut.
+
+```{r}
+ouch <- read_excel("../data/su-f-11.04.03-MZ-2015-A2_5586_Def2000.xls")
+ouch
+```
+
+----
+
+Toutes les entrées sont considérées comme des chaînes de caractères.
+
+```{r}
+str(ouch)
+```
+
+----
+
+Le résultat n'est pas directement exploitable, et ce sera souvent le cas au moment de récupérer des fichiers publics, souvent bizarrement structurés.
+
+----
+
+Important : les fonctions utilisées traditionnellement pour importer des tableaux (par ex. `read.table`) importent par défaut les variables au format "factor", un concept spécifique à R et aux langages prévus pour faire des statistiques. Ce format s'emploie principalement lorsqu'une variable est catégorielle ordinale, c'est-à-dire que les valeurs qu'elle peut prendre sont parmi un ensemble de "mots" (catégorielle) et qu'on peut les classer (ordinale), par exemple l'ensemble : "très mauvais", "mauvais", "bon", "très bon". 
+
+Pour obtenir ce résultat, il faut utiliser (quand elle est disponible) l'option `stringsAsFactors = TRUE` qui est généralement vraie («`TRUE`») par défaut.
+
+----
+
+Le même genre de technique peut être utilisé pour lire des fichiers aux formats suivants.
+
+but | fonction 
+-------------|-------------
+pur texte | `read_file`, `read_lines`
+png | `readPNG`
+spss | package `haven`
+json | package `jsonlite`
+xml | package `xml2`
+
+---- 
+
+#### Exercice 3.3
+
+* Importez un fichier xls présent sur votre ordinateur ou en ligne (par exemple sur le site de l'OFS).
+* Une fois importé, qu'est-ce qui pose problème avec le résultat ? Que devrait-on corriger ? Comment le corriger ?
+

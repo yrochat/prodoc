@@ -1,0 +1,42 @@
+---
+title: "Introduction à R"
+subtitle: "Cours 6. INTERACTIVITE"
+author: "Yannick Rochat"
+date: "1er décembre 2017"
+output:
+  slidy_presentation: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+---
+
+```{r eval = FALSE}
+if (!require('shiny')) install.packages("shiny")
+shiny::runGitHub("shiny-examples", "rstudio", subdir = "001-hello")
+```
+
+---
+
+Le fichier source est disponible ici.
+
+https://github.com/rstudio/shiny-examples/blob/master/001-hello/app.R
+
+---
+
+Bien sûr, il y a une cheatsheet pour Shiny.
+
+https://github.com/rstudio/cheatsheets/raw/master/shiny.pdf
+
+---
+
+Plus d'une centaine d'exemples pour apprendre sont disponibles ici.
+
+https://github.com/rstudio/shiny-examples
+
+---
+
+Des exemples plus "pro" sont disponibles également.
+
+https://shiny.rstudio.com/gallery/
+
+

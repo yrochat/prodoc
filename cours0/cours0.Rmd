@@ -1,0 +1,109 @@
+---
+title: "Introduction à R"
+subtitle: "Cours 0"
+author: "Yannick Rochat"
+date: "1er décembre 2017"
+output:
+  slidy_presentation: default
+  html_notebook: default
+---
+
+
+### 0. CONTEXTE
+
+9h - 9h15
+
+* Quel est le but du cours ?
+* Comment s'y prend-on ?
+* Tour de table
+	
+----
+
+### 1. INTRO
+
+9h15 - 9h45 
+
+* Qu'est-ce que R ? RStudio ?
+* Comment fonctionnent les notebooks ?
+* Obtenir de l'aide
+* Faire un premier calcul
+* Sauver une première variable
+* Exercice 1
+
+----
+
+### 2. NOTIONS DE BASE
+
+9h45 - 10h30
+
+* Opérations de base
+* Fonctions de base
+* Classes de base
+* Manipulations de base
+* Exercice 2
+
+----
+
+### 3. IMPORTER ET NETTOYER DES DOCUMENTS
+
+11h - 11h45
+
+* Définir un chemin
+    + Exercice 3.1
+* Les formats
+    + csv (comma separated values)
+    + xls
+    + plain text
+    + png
+    + XML
+    + JSON
+    + Exercice 3.2
+* Nettoyage
+    + Quelques cas fréquents
+
+----
+
+### 4. DATA FRAMES
+
+11h45 - 12h30	
+
+* Qu'est-ce que c'est ?
+* Manipuler un data frame
+* Exercice 4
+
+----
+
+### 5. LA GRAMMAIRE DES GRAPHIQUES
+
+13h30 - 14h45
+
+* La grammaire des graphiques
+* ggplot2
+    + Charger les données
+    + Choisir une ou plusieurs géométries
+    + Modifier les échelles («scales»)
+    + Modifier les thèmes
+* Exercice 5
+
+----
+
+### 6. INTERACTIVITE
+
+15h15 - 16h
+
+* Rendre un graphique interactif
+* Mise en forme
+* Exercice 6
+
+----
+
+### 7. ANALYSE DE RESEAUX
+
+16h - 16h45
+
+* Charger des données relationnelles
+* Manipuler ces données
+* Calculs
+* Visualisation interactive
+* Exercice 7
+

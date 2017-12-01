@@ -1,0 +1,220 @@
+---
+title: "Introduction à R"
+subtitle: "Cours 4. DATA FRAMES"
+author: "Yannick Rochat"
+date: "1er décembre 2017"
+output:
+  slidy_presentation: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+---
+
+Les data frames sont un des formats les plus importants et les plus populaires de R.
+
+Il s'agit d'un tableau de données, qu'il ne faut pas confondre avec les formats `matrix` et `table`.
+
+----
+
+Tous les éléments d'une matrice sont du même type.
+
+```{r}
+m1 <- matrix(c(1, 2, 3, 4), ncol = 2)
+m1
+```
+
+----
+
+Ici ce sont tous des nombres.
+
+```{r}
+str(m1)
+```
+
+----
+
+Mais si on glisse des lettres dans la liste…
+
+```{r}
+m2 <- matrix(c(1, "b", "c", 4), ncol = 2)
+m2
+```
+
+----
+
+Les éléments numériques sont devenus des chaînes de caractères.
+
+```{r}
+str(m2)
+```
+
+----
+
+Il se passe quelque chose d'équivalent avec les vecteurs.
+
+```{r}
+v1 <- c(1, 2, 3)
+v1
+```
+
+----
+
+```{r}
+v2 <- c(1, "b", 3)
+v2
+```
+
+----
+
+En les comparant…
+
+```{r}
+str(v1)
+str(v2)
+```
+
+----
+
+Le format `table` quand à lui est utilisé pour donner des tables de contingence.
+
+Dans cet exemple, on tire un dé 6 20 fois.
+
+```{r}
+dist <- round(runif(20, min = 1, max = 6))
+dist
+```
+
+----
+
+Une fois classé, les résultats sont…
+
+```{r}
+table(dist)
+```
+
+----
+
+Un data frame est un tableau avec des observations en ligne et des variables en colonne. Les variables peuvent être de tout type, comme dans l'exemple du jeu de données `fifa.csv` qui comprend des données numériques et textuelles.
+
+----
+
+### Manipuler un data frame
+
+
+```{r}
+library(readr)
+fifa <- read_csv2("../data/fifa.csv")
+fifa
+```
+
+----
+
+Un aperçu rapide.
+
+```{r}
+head(fifa)
+```
+
+
+----
+
+Comment accéder à une entrée (ligne).
+
+```{r}
+fifa[1,]
+```
+
+----
+
+Comment accéder à une variable.
+
+```{r}
+fifa[,1]    ## la première variable
+```
+
+----
+
+De manière équivalente, si on a la connaissance de ladite variable.
+
+```{r}
+fifa$journal
+```
+
+
+----
+
+Connaître la répartition de nos sources.
+
+```{r}
+table(fifa$journal)
+```
+
+----
+
+Comment modifier le nom d'une variable.
+
+```{r}
+colnames(fifa)
+```
+
+----
+
+```{r}
+colnames(fifa)[1] <- "nom_du_journal"
+colnames(fifa)
+```
+
+----
+
+Comment modifier le type d'une variable.
+
+```{r}
+fifa$note
+```
+
+----
+
+Ici de `numeric` à `factor`.
+
+```{r}
+fifa$note <- as.factor(fifa$note)
+str(fifa$note)
+```
+
+
+----
+
+Nous allons voir dans le prochain cours comment faire des visualisations à partir d'un tableau de données.
+
+----
+
+Pour aller plus loin, un tutorial est disponible ici
+
+http://www.cookbook-r.com/Manipulating_data/
+
+et des exercices ici
+
+https://www.datacamp.com/community/tutorials/15-easy-solutions-data-frame-problems-r
+
+----
+
+Pour apprendre à manipuler correctement un ou plusieurs tableaux de données, créer et transformer des variables, sélectionner des sous-ensembles, le package `dplyr` est chaudement recommandé.
+
+https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html
+
+----
+
+Une cheatsheet est également disponible.
+
+https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf
+
+
+
+
+
+
+
+
+
+
+

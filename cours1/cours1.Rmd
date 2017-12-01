@@ -1,0 +1,182 @@
+---
+title: "Introduction à R"
+subtitle: "Cours 1. INTRO"
+author: "Yannick Rochat"
+date: "1er décembre 2017"
+output:
+  slidy_presentation: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+---
+
+## Quelques ressources générales
+
+**Introduction à R et au tidyverse** de Julien Barnier
+
+https://juba.github.io/tidyverse
+
+**R for Data Science** de Garrett Grolemund & Hadley Wickham
+
+http://r4ds.had.co.nz/
+
+----
+
+**Les cheatsheets de RStudio**
+
+https://www.rstudio.com/resources/cheatsheets/
+
+----
+
+## Qu'est-ce que R ? 
+
+R est un langage de programmation à l'origine prévu pour faire de l'analyse statistique sur la base du langage propriétaire S.
+
+Son usage s'est répandu bien au-delà.
+
+---
+
+R peut par exemple être lancé dans un terminal.
+
+Mais R désigne également une interface de programmation que l'on nomme R GUI, "GUI" signifiant "Graphical User Interface".
+
+R GUI est un logiciel libre.
+
+---
+
+## Qu'est-ce que RStudio ?
+
+RStudio est un environnement permettant de programmer en R, c'est-à-dire un peu plus qu'une simple interface graphique.
+
+---
+
+En plus d'afficher une console (là où le code est exécuté) et une fenêtre de script (là où l'on rédige le code que l'on veut réutiliser), RStudio permet par exemple de connaître en tout temps les variables enregistrées en mémoire, ou encore d'utiliser un notebook comme celui-ci.
+
+---
+
+Dans ce module de cours, nous allons travailler avec RStudio.
+
+---
+
+## Comment fonctionnent les notebooks ?
+
+Ce document que vous avez ouvert dans RStudio ou dans un navigateur web est un notebook.
+
+---
+
+C'est un format de document permettant de présenter du texte, du code, et les résultats de l'exécution du code.
+
+---
+
+Dans la recherche scientifique, ce format permet de répliquer une expérience.
+
+La démarche de partager un notebook en même temps qu'un article scientifique devrait à l'avenir devenir un standard.
+
+---
+
+Le système de notebooks le plus répandu est Jupyter, qui fonctionne avec le langage de programmation Python mais permet également de gérer d'autres langages de programmation tel R.
+
+---
+
+Ici, nous utilisons des notebooks au format prévu par RStudio. 
+
+Un notebook peut se décliner en plusieurs formats.
+
+* Le fichier au format `.Rmd` s'ouvre dans RStudio. Il est interactif.
+* Le fichier au format `.nb.html` s'ouvre dans un navigateur. Il n'est pas interactif.
+* Le fichier au format `.html` contient les slides (dans le cas présent).
+
+---
+
+Le code apparaît systématiquement dans une case sur fond gris.
+
+Le résultat du code apparaît ensuite dans une case sur fond blanc ou gris selon les réglages.
+
+```{r}
+for (i in 1:3) print(LETTERS[i])
+```
+
+
+---
+
+En ouvrant le notebook dans RStudio, vous aurez la possibilité de modifier le code et de le réexécuter.
+
+---
+
+Par exemple, dans le code ci-dessous, nous sauvons la valeur "2" dans la variable "a" et la valeur "e" dans la variable "b". Puis nous élevons a à la puissance b, c'est-à-dire 2 à la puissance 3. 
+
+Le résultat s'affiche en-dessous.
+
+```{r}
+a <- 2
+b <- 3
+a^b
+```
+
+---
+
+## Exercice 1.1
+
+* Reprenez l'exemple contenant du code ci-dessus.
+* Modifiez les valeurs de a et de b.
+* Actualisez le calcul.
+
+---
+
+## Obtenir de l'aide…
+
+… quand on connaît le nom de la fonction.
+
+```{r eval = FALSE}
+help(exp)                     ## La page d'aide d'une variable
+?exp                          ## Idem
+```
+
+La touche de tabulation peut être très utile ici lorsqu'on connaît les premières lettres d'une fonction.
+
+---
+
+… quand on ne connaît pas le nom de la fonction mais seulement celui de la méthode.
+
+```{r eval = FALSE}
+help.search("linear model")   ## Chercher dans les pages d'aide
+??"linear model"   ## Idem
+```
+
+
+---
+
+Dans ce notebook comme dans les scripts que vous trouverez en ligne, les fonctions sortent du chapeau comme si de rien n'était.
+
+Ne pas se faire d'illusions: 
+
+* Il a d'abord fallu découvrir leur existence.
+* Puis comprendre leur fonctionnement.
+* Le plus souvent en faisant des erreurs au passage.
+
+---
+
+C'est pour cette raison qu'il ne faut **jamais** hésiter à faire une recherche 
+
+* dans les pages d'aide de R
+  + avec `?` lorsqu'on connaît la fonction.
+  + avec `??` lorsqu'on ne la connaît pas.
+* en ligne 
+  + sur stackoverflow
+  + sur un moteur de recherche
+  
+---
+
+## Autres ressources en ligne (veille)
+
+* Sur Twitter, le hashtag #Rstats
+* Sur R-blogger, un agrégateur de blogs dont le thème est le langage R https://www.r-bloggers.com/
+* Sur les mailing lists https://www.r-project.org/mail.html 
+
+---
+
+## Exercice 1.2
+
+* Calculez la racine carrée de `a`.
+* Calculez l'exponentielle de `b`.
+

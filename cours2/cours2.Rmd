@@ -1,0 +1,386 @@
+---
+title: "Introduction à R"
+subtitle: "Cours 2. NOTIONS DE BASE"
+author: "Yannick Rochat"
+date: "1er décembre 2017"
+output:
+  slidy_presentation: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+---
+
+### Les opérations
+
+```{r}
+4 + 3         ## Une simple addition
+2^2 + 3*4     ## Priorité des opérations
+```
+
+----
+
+```{r}
+z = 12.5      ## Sauvegarde d'une valeur dans une variable
+z <- 12.5     ## Privilégier l'utilisation de la flèche <-
+z
+```
+
+---
+
+```{r}
+x <- 12.5
+y <- 7.5
+x + y
+```
+
+----
+
+### Les fonctions
+
+Une fonction prédéfinie.
+
+```{r}
+y = sqrt(4)    ## Fonction racine carrée
+y
+```
+
+----
+
+Toutes les fonctions du package `base`.
+
+```{r eval = FALSE}
+help(package="base")
+```
+
+
+----
+
+Une fonction construite pour l'occasion.
+
+```{r}
+f <- function(x) {2*x}
+f(17)
+f(pi)
+```
+
+----
+
+### Les classes
+
+* "character"
+* "complex"
+* "double"
+* "expression"
+* "integer"
+* "list"
+* "logical"
+* "numeric"
+* "single"
+* "raw"
+* "vector"
+* "function"
+* …
+
+----
+
+Connaître la classe d'un objet.
+
+```{r}
+z <- "hello"
+class(z)                     ## Le type d'une variable
+```
+
+----
+
+La fonction `str` permet d'obtenir des informations plus complètes.
+
+```{r}
+str(z)
+```
+
+----
+
+```{r}
+vec <- c(3,5,3,7)
+str(vec)
+```
+
+----
+
+```{r}
+f <- function(x) {2*x}
+str(f)
+```
+
+----
+
+```{r}
+a <- f(17)
+str(a)
+```
+
+----
+
+### Chaînes de caractères
+
+Les chaînes de caractères sont des assemblages de symboles.
+
+```{r}
+b <- "unil"
+b
+```
+
+----
+
+Il existe de nombreuses fonctions pour les manipuler. 
+
+Par exemple pour connaître leur longueur.
+
+```{r}
+nchar(b)
+```
+
+----
+
+Ou pour créer une nouvelle chaîne à partir de deux autres.
+
+```{r}
+c <- "patient 1"
+paste(b, c, collapse = "")
+```
+
+----
+
+Pour manipuler du texte de manière avancée dans R (ou dans n'importe quel autre langage de programmation), il peut être nécessaire d'apprendre à manipuler des expressions régulières.
+
+----
+
+Deux tutoriaux pour R.
+
+* http://stringr.tidyverse.org/articles/regular-expressions.html
+* http://stat545.com/block022_regular-expression.html
+
+----
+
+La cheatsheet, indispensable.
+
+https://github.com/rstudio/cheatsheets/raw/master/strings.pdf
+
+----
+
+Pour tester des expressions régulières :
+
+https://regex101.com/
+
+----
+
+Quelques ressources ludiques pour s'entraîner…
+
+* https://alf.nu/RegexGolf 
+* https://regexcrossword.com/
+* https://regexone.com/
+
+----
+
+### Les éléments logiques
+
+* TRUE et FALSE
+
+Mais aussi…
+
+* NA, NaN
+* Inf
+
+----
+
+```{r}
+1/0
+x <- Inf
+x - x
+```
+
+"NA" signifie "Not available".
+
+"NaN" signifie "Not a Number".
+
+----
+
+
+### Les opérateurs de comparaison
+
+
+```{r error = TRUE}
+1 == 1
+1 == 2
+```
+
+---
+
+```{r}
+1 != 1 
+1 != 2
+```
+
+----
+
+```{r}
+1 < 1
+1 <= 1
+```
+
+----
+
+### Les opérateurs logiques
+
+```{r}
+a <- (1 < 2)
+a
+!a
+```
+
+----
+
+```{r}
+b <- (2 > 3)
+a & b
+a | b
+```
+
+
+----
+
+
+## Les vecteurs
+
+
+```{r}
+x <- c(5,4,5,6,7,8) 
+x
+x_char = c("a","b","c") 
+x_char
+```
+
+----
+
+Accéder directement à un élément d'un vecteur
+
+```{r}
+x
+x[2]
+x[c(2,4)]
+```
+
+---
+```{r}
+x
+x[c(-2,-4)]
+```
+
+
+----
+
+Manipuler des vecteurs
+
+```{r}
+x[6] = 10
+x
+```
+
+---
+
+```{r}
+a = c(3,4,5,6)
+a[c(2,3)] = 0
+a
+```
+
+---
+
+```{r}
+a[c(2,3)] = c(8,7)
+a
+```
+
+----
+
+```{r}
+c(1,2,3) + c(3,4,5)
+```
+
+----
+
+```{r}
+4 * c(1,2,3)
+c(2,5) < 4
+```
+
+----
+
+Attention lorsque deux éléments ne sont pas de même taille !
+
+```{r}
+c(1,2) + c(3,4,5,6)
+```
+
+----
+
+Attention lorsque l'un n'est pas multiple de l'autre !
+
+```{r}
+c(1,2) + c(2,3,4)
+```
+
+----
+
+## Comment connaître le type d'une variable ?
+
+```{r}
+a <- 1
+b <- 1:5
+class(a)
+class(b)
+```
+
+----
+
+```{r}
+c <- "hello"
+d <- 1 > 2
+class(c)
+class(d)
+```
+
+----
+
+Quelle est la "taille" de l'objet ?
+
+```{r}
+length(a)
+length(b)
+length(c)
+length(d)
+```
+
+----
+
+### Manipulations de l'environnement
+
+```{r}
+ls()    ## Les variables sauvées dans l'environnement de travail
+rm(y)   ## On retire la variable "y"
+ls()
+```
+
+----
+
+### Exercice 2
+
+* Créez un vecteur avec les cinq valeurs suivantes: 5, 10, 15, 20 et 25.
+* Cherchez quelle fonction permet de calculer la moyenne («mean» en anglais) d'une distribution.
+* Calculez-la :-)
+
+
+
+
+
+
