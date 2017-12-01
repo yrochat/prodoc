@@ -1,0 +1,186 @@
+---
+title: "Introduction à R"
+subtitle: "Cours 7. ANALYSE DE RESEAUX"
+author: "Yannick Rochat"
+date: "1er décembre 2017"
+output:
+  html_notebook: default
+  slidy_presentation: default
+  html_document:
+    df_print: paged
+---
+
+Un des packages de référence sur R se nomme `ìgraph`.
+
+```{r}
+if (!require(igraph)) install.packages("igraph")
+library(igraph)
+```
+
+----
+
+Le package `networkD3` permet de créer des visualisations interactives de réseaux.
+
+```{r}
+if (!require(networkD3)) install.packages("networkD3")
+library(networkD3)
+```
+
+----
+
+Le package `ggraph` propose d'appliquer la grammaire des graphiques à la visualisation de réseaux (Il est nécessaire d'installer également le package `ggmap`).
+
+```{r}
+if (!require(ggmap)) devtools::install_github("dkahle/ggmap")
+library(ggmap)
+if (!require(ggraph)) install.packages("ggraph")
+library(ggraph)
+```
+
+----
+
+Le package `rgexf` permet d'importer des graphes enregistrés dans le format du logiciel gephi.
+
+
+----
+
+
+### Charger des données relationnelles
+
+Les entrer à la main.
+
+```{r}
+g <- graph_from_literal( Alice-Bob-Cecil-Alice, Daniel-Cecil-Eugene,
+                     Cecil-Gordon )
+g
+```
+
+
+----
+
+### Charger un tableau de données.
+
+D'abord les acteurs (= sommets).
+
+```{r}
+actors <- data.frame(name=c("Alice", "Bob", "Cecil", "David",
+                            "Esmeralda"),
+                     age=c(48,33,45,34,21),
+                     gender=c("F","M","F","M","F"))
+```
+
+----
+
+```{r}
+str(actors)
+```
+
+
+----
+
+Ensuite les relations (= arêtes).
+
+```{r}
+relations <- data.frame(from=c("Bob", "Cecil", "Cecil", "David",
+                               "David", "Esmeralda"),
+                        to=c("Alice", "Bob", "Alice", "Alice", "Bob", "Alice"),
+                        same.dept=c(FALSE,FALSE,TRUE,FALSE,FALSE,TRUE),
+                        friendship=c(4,5,5,2,1,1), advice=c(4,5,5,4,2,3))
+```
+
+----
+
+```{r}
+str(relations)
+```
+
+----
+
+On crée le réseau.
+
+```{r}
+g <- graph_from_data_frame(relations, directed=TRUE, vertices=actors)
+print(g, e=TRUE, v=TRUE)
+```
+
+
+----
+
+Il est aussi possible de construire un réseau uniquement à partir de la liste des relations grâce à `graph.edgelist` ou à partir de la matrice d'adjacence avec `graph.adjacency`.
+
+----
+
+### Visualisation interactive
+
+```{r}
+simpleNetwork(relations)    ## Cette fonction est issue du package networkD3
+```
+
+
+----
+
+
+### Manipuler ces données
+
+```{r}
+load("../data/magnolia.RData")
+```
+
+----
+
+Réseau de personnages du film Magnolia de Paul Thomas Anderson.
+
+```{r}
+magnolia
+```
+
+
+----
+
+```{r}
+load("../data/erin.RData")
+```
+
+----
+
+Réseau de personnages du film Erin Brokovich de Steven Soderbergh
+
+```{r}
+erin
+```
+
+----
+
+
+
+```{r echo = FALSE}
+draw <- function(g) {
+  ggraph(g, layout = "kk") +
+  geom_node_point(aes(size = degree(g))) +
+  geom_edge_link(aes(width = weight)) +
+  scale_edge_width_continuous(range = c(.1, 2), "Poids") +
+  geom_node_label(
+    aes(label = name),
+    size = 2,
+    label.size = .1,
+    family = "Helvetica",
+    alpha = .8,
+    segment.colour = "pink"
+  ) +
+  scale_size_area(max_size = 5, "Degré")
+}
+```
+
+----
+
+```{r}
+draw(magnolia)
+```
+
+----
+
+```{r}
+draw(erin)
+```
+
+
